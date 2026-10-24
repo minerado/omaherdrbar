@@ -7,6 +7,10 @@
 Your [herdr](https://herdr.dev) agents, in the Omarchy bar. Work anywhere and
 still know the moment an agent needs you, finishes, or is still going.
 
+<p align="center">
+  <img src="docs/demo.gif" alt="Demo: an agent finishes, another needs you, then the panel and settings" width="720">
+</p>
+
 ## Install
 
 Requires Omarchy 4 (with its Quickshell bar) and herdr 0.8 or newer.
