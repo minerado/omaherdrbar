@@ -250,13 +250,11 @@ var OPTIONS = [
   { key: "showHeadline", label: "Headline next to the marks" }
 ]
 
-// Marks for the bar strip. Without idle agents, an all-quiet herd keeps one
-// faint mark so the widget stays visible and clickable.
+// Marks for the bar strip. With nothing to draw (no agents yet, or idle
+// ones hidden) one faint mark stays so the widget is visible and clickable.
 function barAgents(agents, showIdle) {
-  if (showIdle) return agents
-  var active = agents.filter(function(a) { return a.rank <= RANK.working })
-  if (active.length || agents.length === 0) return active
-  return [{ key: "quiet", status: "idle", rank: RANK.idle }]
+  var marks = showIdle ? agents : agents.filter(function(a) { return a.rank <= RANK.working })
+  return marks.length ? marks : [{ key: "quiet", status: "idle", rank: RANK.idle }]
 }
 
 // Flat list of rows in panel order, for keyboard navigation.
@@ -270,7 +268,7 @@ function rows(model) {
 // Bar tooltip: the group headers only; the panel has the detail.
 function tooltip(model) {
   var gs = model.groups || []
-  if (gs.length === 0) return "herdr: no agents"
+  if (gs.length === 0) return "herdr: no agents yet\n\nClick for details · right-click to open herdr"
   return gs.map(function(g) {
     return GLYPH[g.status] + "  " + g.label + (g.summary ? " — " + g.summary : "") + " (" + g.size + ")"
   }).join("\n") + "\n\nClick for details · right-click to open herdr"

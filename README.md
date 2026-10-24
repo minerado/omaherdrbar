@@ -9,7 +9,7 @@ still know the moment an agent needs you, finishes, or is still going.
 
 ## Install
 
-Requires Omarchy (with its Quickshell bar) and herdr.
+Requires Omarchy 4 (with its Quickshell bar) and herdr 0.8 or newer.
 
 ```sh
 omarchy plugin add https://github.com/minerado/omaherdrbar.git --enable
@@ -19,6 +19,16 @@ For [instant updates](#instant-updates), also run:
 
 ```sh
 herdr plugin link ~/.config/omarchy/plugins/ramon.omaherdrbar --enabled
+```
+
+The widget appears as soon as herdr is running. Not seeing it? Make sure herdr
+is running (`SUPER + CTRL + RETURN` on a stock Omarchy).
+
+Update with `omarchy plugin update ramon.omaherdrbar`. To uninstall:
+
+```sh
+herdr plugin unlink ramon.omaherdrbar
+omarchy plugin remove ramon.omaherdrbar
 ```
 
 ## Features
@@ -48,7 +58,8 @@ been in that state. Press `Enter` on an agent to land in its pane.
 <img src="docs/panel.png" alt="The panel listing agents grouped by workspace" width="560">
 
 `j`/`k` move · `Enter` go to agent · `g` open herdr · `s` settings · `Esc` close.
-Right-click the widget to jump to herdr.
+Right-click the widget to jump to herdr. It finds herdr's window wherever it is,
+or opens herdr if it isn't on screen.
 
 ### Make it yours
 
@@ -74,7 +85,7 @@ with `omarchy bar set ramon.omaherdrbar <key> <value> --json`.
 
 | Key | Default | What it does |
 |---|---|---|
-| `workspace` | `9` | Hyprland workspace herdr lives on (right-click, `g` and `Enter` jump there) |
+| `workspace` | auto | Pin herdr to a Hyprland workspace instead of finding its window |
 | `herdrPath` | `~/.local/bin/herdr`, then `herdr` on PATH | The herdr binary |
 | `pollMs` | `2000` | Check interval while the panel is closed (1s while open) |
 | `tickerMs` | `6000` | How long a bar message stays |
@@ -98,6 +109,7 @@ IPC: `quickshell ipc -p /usr/share/omarchy/shell call ramon.omaherdrbar toggle`
 | `Model.js` | Pure logic: ranking, groups, headline, events, durations |
 | `Omaherdrbar.qml` | Bar strip and panel (`StatusMark.qml`, `AgentRow.qml` are pieces) |
 | `Shared.js` | State shared by the per-monitor copies of the widget |
+| `herdr-window` | Finds the window running herdr (for jumping and "already looking") |
 | `herdr-plugin.toml`, `herdr-hook` | The herdr side of instant updates |
 | `tests/model.test.mjs` | `node tests/model.test.mjs` |
 

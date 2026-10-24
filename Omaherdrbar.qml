@@ -25,8 +25,12 @@ Panel {
   readonly property string herdr: setting("herdrPath", "") || Quickshell.env("HOME") + "/.local/bin/herdr"
   // Shell prefix that leaves the herdr to run in $h, falling back to PATH.
   readonly property string herdrShell: "h='" + herdr + "'; [ -x \"$h\" ] || h=herdr; "
-  // Hyprland workspace herdr lives on (ALT+C).
-  readonly property int herdrWorkspace: setting("workspace", 9)
+  // herdr's window is found on each poll (herdr-window). The `workspace`
+  // setting pins it to a Hyprland workspace instead.
+  readonly property int pinnedWorkspace: setting("workspace", 0)
+  readonly property string windowScript: Qt.resolvedUrl("herdr-window").toString().replace("file://", "")
+  property int herdrWindowWorkspace: -1
+  readonly property int herdrWorkspace: pinnedWorkspace > 0 ? pinnedWorkspace : herdrWindowWorkspace
 
   property bool running: false
   // False until the first successful poll (see Model.build).
@@ -43,7 +47,7 @@ Panel {
 
   // On the herdr workspace you can already see what changed, so the widget
   // doesn't announce it.
-  readonly property bool looking: Hyprland.focusedWorkspace !== null
+  readonly property bool looking: herdrWorkspace > 0 && Hyprland.focusedWorkspace !== null
     && Hyprland.focusedWorkspace.id === herdrWorkspace
 
   onLookingChanged: if (looking) ticker = null
@@ -128,6 +132,7 @@ Panel {
   function refresh() {
     if (snapshotProc.running) refreshQueued = true
     else snapshotProc.running = true
+    if (pinnedWorkspace <= 0 && !windowProc.running) windowProc.running = true
   }
 
   function rowByKey(key) {
@@ -142,25 +147,34 @@ Panel {
     selectedKey = rows[Math.max(0, Math.min(rows.length - 1, index + delta))].key
   }
 
-  // Lua-config Hyprland rejects the legacy `dispatch workspace N` syntax.
-  readonly property string workspaceCommand:
-    "hyprctl dispatch 'hl.dsp.focus({ workspace = \"" + herdrWorkspace + "\" })'"
+  // Brings herdr to the front: the pinned workspace, else the window found
+  // right now, else a new herdr terminal (Omarchy's own launcher). Each
+  // dispatch tries the Lua-config syntax, then the legacy one.
+  readonly property string showHerdrCommand: pinnedWorkspace > 0
+    ? "[ \"$(hyprctl dispatch 'hl.dsp.focus({ workspace = \"" + pinnedWorkspace + "\" })')\" = ok ]"
+      + " || hyprctl dispatch workspace " + pinnedWorkspace
+    : "addr=$('" + windowScript + "' | cut -d' ' -f1); if [ -n \"$addr\" ]; then"
+      + " [ \"$(hyprctl dispatch \"hl.dsp.focus({ window = 'address:$addr' })\")\" = ok ]"
+      + " || hyprctl dispatch focuswindow \"address:$addr\";"
+      + " else omarchy-launch-terminal-herdr; fi"
 
   // Close first: the panel loses keyboard focus once the workspace changes,
   // and an open panel left behind can't be dismissed without the mouse.
   function jumpToHerdr() {
     if (!bar) return
     close()
-    bar.run(workspaceCommand)
+    bar.run(showHerdrCommand)
   }
 
   function focusAgent(key) {
     if (!key || !bar) return
     close()
-    bar.run(herdrShell + "\"$h\" agent focus '" + key + "' >/dev/null; " + workspaceCommand)
+    bar.run(herdrShell + "\"$h\" agent focus '" + key + "' >/dev/null; " + showHerdrCommand)
   }
 
-  visible: running && model.agents.length > 0
+  // Shown whenever herdr answers, even with no agents, so a fresh install
+  // doesn't look broken.
+  visible: running
   implicitWidth: button.implicitWidth
   implicitHeight: button.implicitHeight
 
@@ -210,6 +224,18 @@ Panel {
       if (root.refreshQueued) {
         root.refreshQueued = false
         Qt.callLater(root.refresh)
+      }
+    }
+  }
+
+  // Where herdr's window is, for `looking`. Empty output: no window.
+  Process {
+    id: windowProc
+    command: [root.windowScript]
+    stdout: StdioCollector {
+      onStreamFinished: {
+        var workspace = parseInt(text.trim().split(" ")[1])
+        root.herdrWindowWorkspace = isNaN(workspace) ? -1 : workspace
       }
     }
   }
@@ -442,6 +468,16 @@ Panel {
                 }
               }
             }
+          }
+
+          Text {
+            visible: !root.settingsView && root.model.agents.length === 0
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+            text: "No agents yet. Start one in herdr."
+            color: root.dim
+            font.family: root.fontFamily
+            font.pixelSize: Style.font.body
           }
 
           Repeater {

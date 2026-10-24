@@ -1,0 +1,18 @@
+#!/bin/sh
+# Prints "<address> <workspace id>" of the Hyprland window running a herdr
+# client, or nothing. herdr can live in any terminal on any workspace, so
+# each herdr process is walked up its parents until one owns a window; the
+# detached server never does.
+clients=$(hyprctl clients -j 2>/dev/null) || exit 0
+for pid in $(pgrep -x herdr); do
+  p=$pid
+  while [ "${p:-0}" -gt 1 ]; do
+    hit=$(printf '%s' "$clients" | jq -r --argjson pid "$p" \
+      'first(.[] | select(.pid == $pid) | "\(.address) \(.workspace.id)") // empty')
+    if [ -n "$hit" ]; then
+      echo "$hit"
+      exit 0
+    fi
+    p=$(ps -o ppid= -p "$p" 2>/dev/null | tr -d ' ')
+  done
+done

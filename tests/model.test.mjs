@@ -112,7 +112,7 @@ assert.deepEqual(M.barAgents(r.agents, false).map((a) => a.key), ["p2", "p3"])
 assert.equal(M.barAgents(r.agents, true).length, 3)
 r = M.build(snap(agent(), agent({ pane_id: "p2" })), {}, t)
 assert.deepEqual(M.barAgents(r.agents, false).map((a) => a.status), ["idle"], "all quiet keeps one faint mark")
-assert.deepEqual(M.barAgents([], false), [])
+assert.deepEqual(M.barAgents([], true).map((a) => a.status), ["idle"], "no agents yet keeps one faint mark")
 assert.deepEqual(M.OPTIONS.map((o) => o.key), ["showFolder", "showDuration", "showIdleInBar", "showHeadline"])
 
 // Agents in an unlisted workspace land in "Other".
