@@ -13,7 +13,8 @@ still know the moment an agent needs you, finishes, or is still going.
 
 ## Install
 
-Requires Omarchy 4 (with its Quickshell bar) and herdr 0.8 or newer.
+Requires Omarchy 4 (with its Quickshell bar) and herdr 0.8 or newer. It also
+uses `jq`, `hyprctl`, `pgrep` and `ps`, which Omarchy already ships.
 
 ```sh
 omarchy plugin add https://github.com/minerado/omaherdrbar.git --enable
