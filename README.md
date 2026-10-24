@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/header.png" alt="omaherdrbar: herdr agent status in the Omarchy bar" width="100%">
+</p>
+
 # omaherdrbar
 
 Omarchy shell bar widget that answers one question while you're not looking at

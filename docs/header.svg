@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="460" viewBox="0 0 1280 460">
+  <defs>
+    <radialGradient id="glowA" cx="0.85" cy="0.1" r="0.7">
+      <stop offset="0" stop-color="#ff44ca" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ff44ca" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.05" cy="1" r="0.7">
+      <stop offset="0" stop-color="#1fe4f6" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#1fe4f6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="frame" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1fe4f6"/>
+      <stop offset="1" stop-color="#ff44ca"/>
+    </linearGradient>
+    <pattern id="rain" width="46" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(12)">
+      <line x1="0" y1="0" x2="0" y2="14" stroke="#4c6585" stroke-opacity="0.18" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <style>
+    text { font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace; }
+    .fg { fill: #e3e8f0; } .dim { fill: #6f8197; } .muted { fill: #4c6585; }
+    .red { fill: #ff3965; } .green { fill: #b1d60f; } .blue { fill: #118ed5; }
+  </style>
+
+  <rect width="1280" height="460" rx="18" fill="#000717"/>
+  <rect width="1280" height="460" rx="18" fill="url(#rain)"/>
+  <rect width="1280" height="460" rx="18" fill="url(#glowA)"/>
+  <rect width="1280" height="460" rx="18" fill="url(#glowB)"/>
+
+  <!-- Left: name and pitch -->
+  <text x="80" y="128" font-size="15" letter-spacing="4" fill="#1fe4f6" fill-opacity="0.85">OMARCHY · HERDR</text>
+  <text x="76" y="200" font-size="68" font-weight="800" fill="#f8fafd">omaherdrbar</text>
+  <text x="80" y="248" font-size="23" fill="#c4cbd4">Your herdr agents, in the Omarchy bar.</text>
+  <text x="80" y="282" font-size="18" class="dim">Know what needs you without looking.</text>
+
+  <g font-size="17" transform="translate(80 352)">
+    <text x="0" y="0" class="red" font-weight="700">◆</text><text x="22" y="0" class="fg">needs you</text>
+    <text x="150" y="0" class="green" font-weight="700">◉</text><text x="172" y="0" class="fg">done</text>
+    <text x="250" y="0" class="blue">●</text><text x="272" y="0" class="fg">working</text>
+    <text x="382" y="0" class="muted">○</text><text x="404" y="0" class="fg">idle</text>
+  </g>
+
+  <!-- Right: the bar strip -->
+  <g transform="translate(700 62)">
+    <rect width="500" height="44" rx="10" fill="#000511" stroke="#4c6585" stroke-opacity="0.35"/>
+    <text x="22" y="28" font-size="15" class="dim">Fri 14:02</text>
+    <g font-size="17" transform="translate(150 29)">
+      <text x="0" class="green" font-weight="700">◉</text>
+      <text x="20" class="blue">●</text>
+      <text x="40" class="muted">○</text>
+      <text x="60" class="red" font-weight="700">◆</text>
+      <text x="92" class="red" font-size="16">◆ Billing — needs you</text>
+    </g>
+    <rect x="146" y="38" width="306" height="2.5" rx="1.25" fill="#ff44ca"/>
+  </g>
+
+  <!-- Right: the panel -->
+  <g transform="translate(760 124)">
+    <rect width="440" height="290" rx="10" fill="#000511"/>
+    <rect x="1" y="1" width="438" height="288" rx="9" fill="none" stroke="url(#frame)" stroke-width="2"/>
+
+    <text x="24" y="40" font-size="17" font-weight="700" class="fg">Herdr</text>
+    <text x="416" y="40" font-size="13" class="dim" text-anchor="end">4 agents</text>
+        <rect x="24" y="56" width="392" height="1" fill="#e3e8f0" fill-opacity="0.1"/>
+
+    <circle cx="30" cy="88" r="4.5" fill="#ff3965"/>
+    <text x="46" y="94" font-size="18" font-weight="700" class="fg">Billing</text>
+    <text x="408" y="93" font-size="13" text-anchor="end"><tspan class="red">1 needs you</tspan><tspan class="dim" dx="10">1 agent</tspan></text>
+
+    <rect x="24" y="106" width="392" height="32" rx="5" fill="#e3e8f0" fill-opacity="0.07"/>
+    <circle cx="44" cy="122" r="3" fill="#ff3965"/>
+    <text x="58" y="127" font-size="14" class="fg">Migrate the users table</text>
+    <text x="268" y="127" font-size="12" class="dim">api</text>
+    <text text-anchor="end" x="408" y="127" font-size="14" class="red" font-weight="700">needs you 2m</text>
+
+    <circle cx="30" cy="174" r="4.5" fill="#b1d60f"/>
+    <text x="46" y="180" font-size="18" font-weight="700" class="fg">Main</text>
+    <text x="408" y="179" font-size="13" text-anchor="end"><tspan class="green">1 done</tspan><tspan class="dim" dx="10">3 agents</tspan></text>
+
+    <circle cx="44" cy="206" r="3" fill="#b1d60f"/>
+    <text x="58" y="211" font-size="14" class="fg">Fix login bug</text>
+    <text x="268" y="211" font-size="12" class="dim">web</text>
+    <text text-anchor="end" x="408" y="211" font-size="14" class="green">done 1m</text>
+
+    <circle cx="44" cy="234" r="3" fill="#118ed5"/>
+    <text x="58" y="239" font-size="14" class="fg">Add dark mode toggle</text>
+    <text x="268" y="239" font-size="12" class="dim">web</text>
+    <text text-anchor="end" x="408" y="239" font-size="14" class="blue">working</text>
+
+    <circle cx="44" cy="262" r="3" fill="#4c6585"/>
+    <text x="58" y="267" font-size="14" class="dim">Write release notes</text>
+    <text x="268" y="267" font-size="12" class="dim">docs</text>
+    <text text-anchor="end" x="408" y="267" font-size="14" class="dim">idle 9m</text>
+  </g>
+</svg>
