@@ -6,5 +6,5 @@
 # omarchy-shell lives outside the usual PATH, which herdr's server inherits.
 shell=$(command -v omarchy-shell 2>/dev/null) || shell=/usr/share/omarchy/bin/omarchy-shell
 [ -x "$shell" ] || exit 0
-"$shell" -q ramon.omaherdrbar-hook refresh >/dev/null 2>&1
+"$shell" -q omaherdrbar-hook refresh >/dev/null 2>&1
 exit 0

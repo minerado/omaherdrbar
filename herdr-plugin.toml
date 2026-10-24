@@ -1,7 +1,7 @@
 # omaherdrbar's half inside herdr: tells the bar widget the moment an agent
 # changes state, so it doesn't wait for its next poll.
 # Link once with `herdr plugin link ~/code/omaherdrbar --enabled`.
-id = "ramon.omaherdrbar"
+id = "omaherdrbar"
 name = "omaherdrbar"
 version = "0.1.0"
 min_herdr_version = "0.8.0"

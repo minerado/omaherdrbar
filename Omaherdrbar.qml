@@ -16,8 +16,8 @@ import "Shared.js" as Shared
 // right-click jumps to the herdr workspace.
 Panel {
   id: root
-  moduleName: "ramon.omaherdrbar"
-  ipcTarget: "ramon.omaherdrbar"
+  moduleName: "omaherdrbar"
+  ipcTarget: "omaherdrbar"
 
   // herdr's installer puts it in ~/.local/bin, which is preferred over PATH:
   // an older packaged /usr/bin/herdr can win on the shell's PATH and fails
@@ -242,7 +242,7 @@ Panel {
 
   // herdr's plugin hook (herdr-hook) calls this on every agent event.
   IpcHandler {
-    target: "ramon.omaherdrbar-hook"
+    target: "omaherdrbar-hook"
     function refresh(): void { Shared.refreshAll() }
   }
 

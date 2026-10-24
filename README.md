@@ -22,17 +22,17 @@ omarchy plugin add https://github.com/minerado/omaherdrbar.git --enable
 For [instant updates](#instant-updates), also run:
 
 ```sh
-herdr plugin link ~/.config/omarchy/plugins/ramon.omaherdrbar --enabled
+herdr plugin link ~/.config/omarchy/plugins/omaherdrbar --enabled
 ```
 
 The widget appears as soon as herdr is running. Not seeing it? Make sure herdr
 is running (`SUPER + CTRL + RETURN` on a stock Omarchy).
 
-Update with `omarchy plugin update ramon.omaherdrbar`. To uninstall:
+Update with `omarchy plugin update omaherdrbar`. To uninstall:
 
 ```sh
-herdr plugin unlink ramon.omaherdrbar
-omarchy plugin remove ramon.omaherdrbar
+herdr plugin unlink omaherdrbar
+omarchy plugin remove omaherdrbar
 ```
 
 ## Features
@@ -85,7 +85,7 @@ under a second instead of on the next poll.
 <summary>All settings</summary>
 
 Settings live in the widget's entry in `~/.config/omarchy/shell.json`. Set them
-with `omarchy bar set ramon.omaherdrbar <key> <value> --json`.
+with `omarchy bar set omaherdrbar <key> <value> --json`.
 
 | Key | Default | What it does |
 |---|---|---|
@@ -98,7 +98,7 @@ with `omarchy bar set ramon.omaherdrbar <key> <value> --json`.
 | `showIdleInBar` | `true` | Idle agents' marks in the bar. When off and all agents are idle, one faint mark stays |
 | `showHeadline` | `true` | Text next to the marks. Bar messages still show when off |
 
-IPC: `quickshell ipc -p /usr/share/omarchy/shell call ramon.omaherdrbar toggle`
+IPC: `quickshell ipc -p /usr/share/omarchy/shell call omaherdrbar toggle`
 (also `open` / `close`).
 
 </details>
@@ -120,9 +120,9 @@ IPC: `quickshell ipc -p /usr/share/omarchy/shell call ramon.omaherdrbar toggle`
 Run from a checkout:
 
 ```sh
-ln -s ~/code/omaherdrbar ~/.config/omarchy/plugins/ramon.omaherdrbar
+ln -s ~/code/omaherdrbar ~/.config/omarchy/plugins/omaherdrbar
 omarchy-shell shell rescanPlugins
-omarchy plugin enable ramon.omaherdrbar
+omarchy plugin enable omaherdrbar
 herdr plugin link ~/code/omaherdrbar --enabled
 ```
 
