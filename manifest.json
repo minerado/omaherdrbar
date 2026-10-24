@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "id": "ramon.omaherdrbar",
+  "name": "omaherdrbar",
+  "version": "0.1.0",
+  "author": "minerado",
+  "description": "Agent status from the running herdr session: working, blocked, idle",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Omaherdrbar.qml"
+  },
+  "barWidget": {
+    "displayName": "omaherdrbar",
+    "description": "Agent status from herdr: what needs you, what's done, what's working",
+    "category": "Productivity",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "showFolder": true,
+      "showDuration": true,
+      "showIdleInBar": true,
+      "showHeadline": true
+    },
+    "schema": [
+      {
+        "key": "showFolder",
+        "type": "boolean",
+        "label": "Folder on each agent",
+        "defaultValue": true
+      },
+      {
+        "key": "showDuration",
+        "type": "boolean",
+        "label": "Time in state (\"idle 3m\")",
+        "defaultValue": true
+      },
+      {
+        "key": "showIdleInBar",
+        "type": "boolean",
+        "label": "Idle agents in the bar",
+        "defaultValue": true
+      },
+      {
+        "key": "showHeadline",
+        "type": "boolean",
+        "label": "Headline next to the marks",
+        "defaultValue": true
+      }
+    ]
+  },
+  "license": "MIT"
+}

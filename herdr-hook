@@ -1,0 +1,10 @@
+#!/bin/sh
+# Runs inside herdr on agent events (see herdr-plugin.toml). Asks the bar
+# widget to poll now; the widget reads the new state itself, so no event
+# payload is forwarded. Never fails: a shell that isn't running has nothing
+# to poke.
+# omarchy-shell lives outside the usual PATH, which herdr's server inherits.
+shell=$(command -v omarchy-shell 2>/dev/null) || shell=/usr/share/omarchy/bin/omarchy-shell
+[ -x "$shell" ] || exit 0
+"$shell" -q ramon.omaherdrbar-hook refresh >/dev/null 2>&1
+exit 0

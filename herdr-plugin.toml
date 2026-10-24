@@ -1,0 +1,21 @@
+# omaherdrbar's half inside herdr: tells the bar widget the moment an agent
+# changes state, so it doesn't wait for its next poll.
+# Link once with `herdr plugin link ~/code/omaherdrbar --enabled`.
+id = "ramon.omaherdrbar"
+name = "omaherdrbar"
+version = "0.1.0"
+min_herdr_version = "0.8.0"
+description = "Pokes the Omarchy bar widget when an agent changes state."
+platforms = ["linux"]
+
+[[events]]
+on = "pane.agent_status_changed"
+command = ["./herdr-hook"]
+
+[[events]]
+on = "pane.agent_detected"
+command = ["./herdr-hook"]
+
+[[events]]
+on = "pane.closed"
+command = ["./herdr-hook"]
