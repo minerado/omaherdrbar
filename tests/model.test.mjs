@@ -123,4 +123,12 @@ assert.deepEqual(r.groups.map((g) => g.label), ["Other"])
 const colors = M.parseColors('accent = "#ff44ca"\nred = "#ff3965"\n# comment\nhyprland_active_border = "rgba(1fe4f6ee)"\n')
 assert.deepEqual(colors, { accent: "#ff44ca", red: "#ff3965" })
 
+// Agent output can't smuggle rich text (an <img> would be fetched).
+r = M.build({
+  agents: [agent({ agent_status: "blocked", terminal_title_stripped: '<img src="http://x/a.png">Hi', cwd: "/x/<b>dir</b>" })],
+  workspaces: [{ workspace_id: "wF", label: "<img src=http://x>" }],
+}, {}, t)
+for (const text of [r.agents[0].title, r.agents[0].folder, r.groups[0].label, r.headline, M.tooltip(r)])
+  assert.ok(!/[<>]/.test(text), `no markup in ${JSON.stringify(text)}`)
+
 console.log("model tests: ok")

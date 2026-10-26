@@ -44,6 +44,7 @@ Item {
     anchors.rightMargin: Style.space(12)
     anchors.verticalCenter: parent.verticalCenter
     text: root.agent.title || ""
+    textFormat: Text.PlainText
     color: root.quiet ? root.dim : root.foreground
     elide: Text.ElideRight
     font.family: root.fontFamily
@@ -59,6 +60,7 @@ Item {
     anchors.verticalCenter: parent.verticalCenter
     width: Math.min(implicitWidth, root.width * 0.3)
     text: root.agent.folderLabel || ""
+    textFormat: Text.PlainText
     color: root.dim
     elide: Text.ElideMiddle
     font.family: root.fontFamily

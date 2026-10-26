@@ -31,17 +31,23 @@ function normalStatus(raw) {
   return RANK[raw] === undefined ? "unknown" : raw
 }
 
+// Titles and names come from agent output; QML Text and the shell tooltip
+// would render "<img src=...>" as rich text and fetch it. No tags, no fetch.
+function plain(text) {
+  return String(text || "").replace(/[<>]/g, "")
+}
+
 function basename(path) {
   var parts = String(path || "").split("/").filter(function(p) { return p !== "" })
-  return parts.length ? parts[parts.length - 1] : ""
+  return parts.length ? plain(parts[parts.length - 1]) : ""
 }
 
 // Session titles are the useful label ("Fix login bug"); generic
 // ones like "Claude Code" fall back to the folder name.
 function displayTitle(agent) {
-  var title = (agent.terminal_title_stripped || agent.terminal_title || "").trim()
+  var title = plain(agent.terminal_title_stripped || agent.terminal_title).trim()
   if (title && title !== "Claude Code" && title !== agent.agent) return title
-  return basename(agent.cwd) || agent.agent || "agent"
+  return basename(agent.cwd) || plain(agent.agent) || "agent"
 }
 
 // Stable sort by rank, keeping herdr's order for ties.
@@ -155,7 +161,7 @@ function groups(snapshot, agents) {
     var id = w.workspace_id || w.id
     var rows = agents.filter(function(a) { return a.workspaceId === id })
     if (rows.length === 0) continue
-    list.push(makeGroup(w.label || w.name || id, rows))
+    list.push(makeGroup(plain(w.label || w.name || id), rows))
   }
   // Agents whose workspace isn't listed still need a home.
   var known = list.reduce(function(acc, g) { return acc + g.agents.length }, 0)
@@ -221,7 +227,7 @@ function headline(ranked, counts, snapshot) {
 function workspaceLabel(snapshot, id) {
   var workspaces = snapshot.workspaces || []
   for (var i = 0; i < workspaces.length; i++) {
-    if ((workspaces[i].workspace_id || workspaces[i].id) === id) return workspaces[i].label || workspaces[i].name || ""
+    if ((workspaces[i].workspace_id || workspaces[i].id) === id) return plain(workspaces[i].label || workspaces[i].name)
   }
   return ""
 }

@@ -300,6 +300,7 @@ Panel {
         visible: text !== ""
         // The ticker is an event, so it shows even with the headline off.
         text: root.ticker ? root.ticker.text : root.showHeadline ? root.model.headline : ""
+        textFormat: Text.PlainText
         color: root.ticker ? root.statusColor(root.ticker.status)
           : root.model.mood === "urgent" ? root.statusColor("blocked")
           : root.model.mood === "attention" ? root.statusColor("ready") : button.foreground
@@ -506,6 +507,7 @@ Panel {
                   anchors.left: groupDot.right
                   anchors.leftMargin: Style.space(10)
                   text: group.modelData.label
+                  textFormat: Text.PlainText
                   color: group.modelData.status === "idle" ? root.dim : root.foreground
                   font.family: root.fontFamily
                   font.pixelSize: Style.font.title
